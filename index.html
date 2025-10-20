@@ -12,30 +12,34 @@
 <style>
   body {
     margin: 0;
-    background: radial-gradient(ellipse at center, #050016 0%, #000 100%);
+    background: black;
     color: white;
     font-family: 'Orbitron', sans-serif;
     overflow: hidden;
   }
+
   #celestial-map {
     width: 100vw;
     height: 100vh;
   }
+
   #menu {
     position: absolute;
     top: 15px;
     left: 15px;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     padding: 15px 20px;
     border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,255,255,0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     z-index: 999;
   }
+
   #menu h2 {
     font-size: 16px;
     margin: 0 0 10px 0;
     color: #00ffff;
   }
+
   #menu button {
     background: linear-gradient(90deg, #00ffff, #0077ff);
     border: none;
@@ -47,6 +51,7 @@
     cursor: pointer;
     transition: 0.2s;
   }
+
   #menu button:hover {
     background: linear-gradient(90deg, #0077ff, #00ffff);
     transform: scale(1.05);
@@ -62,27 +67,29 @@
     <button onclick="Celestial.toggle('constellations')">Constellations</button>
     <button onclick="Celestial.toggle('constellationlines')">Lines</button>
     <button onclick="Celestial.toggle('constellationnames')">Names</button>
-    <button onclick="Celestial.rotate({center: [0,0], reverse:true})">Center Reset</button>
+    <button onclick="Celestial.rotate({center: [0,0], reverse:true})">Reset</button>
   </div>
 
 <script>
-  // Initialize Sky Chart
-  Celestial.display({
-    width: window.innerWidth,
-    height: window.innerHeight,
-    projection: "aitoff",
-    datapath: "https://ofrohn.github.io/data/",
-    stars: { show: true, limit: 6, style: { fill: "#fff", opacity: 1 } },
-    constellations: { show: true, names: true, lines: true, lineStyle: { stroke: "#0ff", width: 1, opacity: 0.6 } },
-    planets: { show: true, names: true },
-    background: { fill: "rgba(0,0,0,0.9)", stroke: "#00ffff", opacity: 0.2 },
-    horizon: { show: true, stroke: "#f0f", width: 1.2, opacity: 0.4 },
-    mw: { show: true, style: { fill: "#0ff", opacity: 0.05 } },
-    interactive: true,
-    form: false
-  });
+  // Initialize after page load
+  window.onload = function() {
+    Celestial.display({
+      container: 'celestial-map',   // 👈 container is REQUIRED
+      width: window.innerWidth,
+      height: window.innerHeight,
+      projection: "aitoff",
+      datapath: "https://ofrohn.github.io/Celestial/data/", // 👈 correct data path
+      stars: { show: true, limit: 6, style: { fill: "#ffffff", opacity: 1 } },
+      constellations: { show: true, names: true, lines: true, lineStyle: { stroke: "#00ffff", width: 1, opacity: 0.6 } },
+      planets: { show: true, names: true },
+      background: { fill: "#000000", opacity: 1 },
+      horizon: { show: true, stroke: "#f0f", width: 1, opacity: 0.4 },
+      mw: { show: true, style: { fill: "#0ff", opacity: 0.05 } },
+      interactive: true,
+      form: false
+    });
+  }
 
-  // Resize handling
   window.addEventListener('resize', () => {
     Celestial.resize({ width: window.innerWidth, height: window.innerHeight });
   });
